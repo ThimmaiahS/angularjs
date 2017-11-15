@@ -1,0 +1,34 @@
+<html ng-app="myApp">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script>
+myApp = angular.module('myApp',[]);
+myApp.controller('myController', function($scope,$http){
+$http.get('data.json').success(function(response){
+$scope.myData=response;
+});
+$scope.removeName = function(row){
+$scope.myData.splice($scope.myData.indexOf(row),1)
+}
+$scope.addData = function(data){
+	$scope.myData.push($scope.data);
+    $http.post('data.json', $scope.myData);
+	}
+});
+</script>
+</head>
+<body ng-controller="myController">
+Search <input type="text" value="" ng-model="Search">
+<table border="1">
+<tr ng-repeat="employee in myData | filter : Search">
+<td><input type="text" ng-model="employee.name"></input></td>
+<td><input type="text" ng-model="company"></input></td>
+<td><a href="" ng-click="removeName(data)">Remove</a></td>
+<td><a href="" ng-click="addData(employee)">Add</a></td>
+</tr>
+</table>
+
+
+</body>
+
+</html>
